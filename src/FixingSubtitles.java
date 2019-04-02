@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class FixingSubtitles {
-    private static final int COEFFICIENT = 60;
     private static final int ADDITION = 2;
     private static final String INPUT_FILE = "src/Bora.sub.sub";
     private static final String OUTPUT_FILE = "fixed.sub";
@@ -53,7 +52,7 @@ public class FixingSubtitles {
         String toTime = line.substring(bracketFromIndex + 2, bracketToIndex);
 
         // Calculate new 'to' time
-        int newToTime = Integer.parseInt(toTime)*COEFFICIENT + ADDITION;
+        int newToTime = (Integer.parseInt(toTime)/60)*1000+ADDITION;
 
         // Create a new line using the new 'from' and 'to' times
         String fixedLine = "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);

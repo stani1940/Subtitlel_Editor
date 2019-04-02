@@ -1,21 +1,25 @@
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Redefinable;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.File;
 
 
-public class Gui implements ActionListener {
+public class Gui {
 
     static JButton loadFileButton;
     JButton openFileButton;
     static JButton exitButton;
-    JButton submitButton;
-    JRadioButton fastRadioButton,slowRadioButton;
+    static JButton submitButton;
     ButtonGroup buttonGroup;
-    JTextField textField;
+    JRadioButton fastRadioButton, slowRadioButton;
+   JCheckBox removeTagButton;
+    static JTextField textField;
     JLabel textLabel;
     JFileChooser fileChooser;
     static JTextArea log;
+
 
     Gui() {
         JFrame frame = new JFrame("Редактор на субтитри");
@@ -25,25 +29,30 @@ public class Gui implements ActionListener {
         openFileButton = new JButton("Отвори файл");
         exitButton = new JButton("Изход");
         exitButton = new JButton("Изход");
-        submitButton = new JButton("Запиши проблемите");
+        submitButton = new JButton("Запиши промените");
         fastRadioButton = new JRadioButton("Забързай с");
         slowRadioButton = new JRadioButton("Забави с");
         buttonGroup = new ButtonGroup();
         buttonGroup.add(fastRadioButton);
         buttonGroup.add(loadFileButton);
         textField = new JTextField();
-        textLabel =new JLabel();
-        log = new JTextArea(5,20);
+        textLabel = new JLabel();
+        log = new JTextArea(5, 20);
 
         loadFileButton.setBounds(80, 30, 200, 50);
         openFileButton.setBounds(80, 90, 200, 50);
         openFileButton.setBackground(Color.YELLOW);
         exitButton.setBounds(80, 150, 200, 50);
+        exitButton.setBackground(Color.red);
         textField.setBounds(350, 100, 50, 50);
         submitButton.setBounds(80, 210, 200, 50);
+        submitButton.setBackground(Color.GREEN);
         fastRadioButton.setBounds(350, 30, 100, 50);
         slowRadioButton.setBounds(350, 60, 100, 50);
-        log.setBounds(80,270,200,50);
+        removeTagButton = new JCheckBox("Премахни таговете");
+        removeTagButton.setBounds(350,160,150,100);
+        log.setBounds(80, 270, 200, 50);
+
         frame.add(loadFileButton);
         frame.add(openFileButton);
         frame.add(exitButton);
@@ -52,61 +61,58 @@ public class Gui implements ActionListener {
         frame.add(slowRadioButton);
         frame.add(textField);
         frame.add(log);
-
+        frame.add(removeTagButton);
         frame.setSize(700, 400);
         frame.setLayout(null);
         frame.setResizable(true);
-
         frame.setVisible(true);
-        submitButton.addActionListener(this);
     }
-    public static void setExitButton(){
+
+    public static void setExitButton() {
 
         exitButton.addActionListener(e -> {
             System.exit(0);
         });
     }
-    public static void setLoadFileButton(){
+
+    public static void setLoadFileButton() {
         loadFileButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent ae) {
                 JFileChooser fileChooser = new JFileChooser();
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
 
-                    log.append("Зареждам файл: " + selectedFile.getName() + "." );
+                    log.append("Зареждам файл: " + selectedFile.getName() + ".");
                 } else {
-                    log.append("Зареждане на файл отказано от потребителя." );
+                    log.append("Зареждане на файл отказано от потребителя.");
                 }
 
             }
 
-
         });
     }
+
     public String nameSelectedFile(JFileChooser fileChooser) {
         return fileChooser.getSelectedFile().getName();
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        String userName = textField.getText();
+    public static void setSubmitButton() {
 
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String textMs = textField.getText().trim();
 
-        if ((!userName.isEmpty()) && (userName != null)) {
-            if (userName.trim().equals("admin")) {
-                //labelResult.setText(" Вход успешен, " + userName);
-            } else {
-                // labelResult.setText(" Вход неуспешен ");
+                if ((!textMs.isEmpty()) && (textMs != null)) {
+                    int addition = Integer.parseInt(textMs);
+                    System.out.println(addition);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Моля въведете число за милисекунди");
+                }
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Моля въведете потребителско име и парола");
-        }
-    }
-
-    public static void main(String[] args) {
-
-
+        });
     }
 }

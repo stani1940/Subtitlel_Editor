@@ -3,6 +3,7 @@ public class App {
         new Gui();
         Gui.setExitButton();
         Gui.setLoadFileButton();
+        Gui.setSubmitButton();
     }
 }
 
