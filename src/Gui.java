@@ -1,8 +1,8 @@
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Redefinable;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 
@@ -14,7 +14,7 @@ public class Gui {
     static JButton submitButton;
     ButtonGroup buttonGroup;
     JRadioButton fastRadioButton, slowRadioButton;
-   JCheckBox removeTagButton;
+    static JCheckBox removeTagButton;
     static JTextField textField;
     JLabel textLabel;
     JFileChooser fileChooser;
@@ -49,8 +49,8 @@ public class Gui {
         submitButton.setBackground(Color.GREEN);
         fastRadioButton.setBounds(350, 30, 100, 50);
         slowRadioButton.setBounds(350, 60, 100, 50);
-        removeTagButton = new JCheckBox("Премахни таговете");
-        removeTagButton.setBounds(350,160,150,100);
+        removeTagButton = new JCheckBox("Премахни таговете от текста");
+        removeTagButton.setBounds(350, 160, 200, 100);
         log.setBounds(80, 270, 200, 50);
 
         frame.add(loadFileButton);
@@ -79,28 +79,32 @@ public class Gui {
         loadFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
 
-                    log.append("Зареждам файл: " + selectedFile.getName() + ".");
-                } else {
-                    log.append("Зареждане на файл отказано от потребителя.");
-                }
+                showOpenFileDialog();
 
             }
 
         });
     }
 
-    public String nameSelectedFile(JFileChooser fileChooser) {
-        return fileChooser.getSelectedFile().getName();
+    private static void showOpenFileDialog() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.srt", "srt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.sub", "sub"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
 
+            log.append("Зареждам файл: " + selectedFile.getName() + ".");
+        } else {
+            log.append("Зареждане на файл отказано от потребителя.");
+        }
     }
 
     public static void setSubmitButton() {
-
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,4 +119,21 @@ public class Gui {
             }
         });
     }
+
+    public static void setRemoveTagButton() {
+        removeTagButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (removeTagButton.isSelected()) {
+                    String text = "<B>I don't want this to be bold<\\B>";
+                    text = text.replaceAll("\\<.*?\\>", "");
+                    System.out.println(text);
+                } else {
+                    System.out.println("no");
+                }
+            }
+        });
+    }
+
 }

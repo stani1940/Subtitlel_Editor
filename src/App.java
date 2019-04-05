@@ -4,6 +4,7 @@ public class App {
         Gui.setExitButton();
         Gui.setLoadFileButton();
         Gui.setSubmitButton();
+        Gui.setRemoveTagButton();
     }
 }
 
