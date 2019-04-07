@@ -1,6 +1,8 @@
 package Sachko;
 
 public class App {
-    //TODO Tva e samo na4aloto
-    ///TEST
+    public static void main(String[] args) {
+        SUBtitleLogic test = new SUBtitleLogic(717);
+        System.out.println(test.realSecond);
+    }
 }
