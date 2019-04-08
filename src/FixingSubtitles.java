@@ -4,18 +4,17 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-public class FixingSubtitles {
+public class FixingSubtitles extends Gui{
     private static final int ADDITION = 2;
-    private static final String INPUT_FILE = "src/Bora.sub.sub";
+    public static String INPUT_FILE = "";
     private static final String OUTPUT_FILE = "fixed.sub";
 
-    public static void main(String[] args) {
+    FixingSubtitles() {
         Scanner fileInput = null;
         PrintStream fileOutput = null;
         try {
             // Create scanner with the Cyrillic encoding
             fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
-
             fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
             String line;
             while (fileInput.hasNextLine()) {
@@ -35,8 +34,8 @@ public class FixingSubtitles {
                 fileOutput.close();
             }
         }
-    }
 
+    }
     private static String fixLine(String line) {
         // Find closing brace
         int bracketFromIndex = line.indexOf('}');

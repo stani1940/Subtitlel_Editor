@@ -1,12 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 
-public class Gui {
+public class Gui extends Component {
 
     static JButton loadFileButton;
     JButton openFileButton;
@@ -17,7 +16,7 @@ public class Gui {
     static JCheckBox removeTagButton;
     static JTextField textField;
     JLabel textLabel;
-    JFileChooser fileChooser;
+    //static JFileChooser fileChooser;
     static JTextArea log;
 
 
@@ -86,33 +85,41 @@ public class Gui {
 
         });
     }
-
+     static JFileChooser fileChooser = new JFileChooser();
     private static void showOpenFileDialog() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+        fileChooser.setCurrentDirectory(new File(("src")));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.srt", "srt"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.sub", "sub"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.srt", "sub", "srt"));
         fileChooser.setAcceptAllFileFilterUsed(true);
-        int result = fileChooser.showOpenDialog(null);
+          int result =  fileChooser.showOpenDialog(null);
+
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
 
             log.append("Зареждам файл: " + selectedFile.getName() + ".");
+
         } else {
             log.append("Зареждане на файл отказано от потребителя.");
+
         }
+
     }
 
     public static void setSubmitButton() {
         submitButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
+                new FixingSubtitles().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
+
+                new FixingSubtitles();
                 String textMs = textField.getText().trim();
 
                 if ((!textMs.isEmpty()) && (textMs != null)) {
                     int addition = Integer.parseInt(textMs);
-                    System.out.println(addition);
+
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Моля въведете число за милисекунди");
                 }
