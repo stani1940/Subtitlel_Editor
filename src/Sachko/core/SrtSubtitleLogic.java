@@ -22,7 +22,7 @@ public class SrtSubtitleLogic {
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
-                String fixedLine = fixLine(line);
+                String fixedLine = removeTags(line);
                 fileOutput.println(fixedLine);
             }
         } catch (FileNotFoundException fnfe) {
@@ -60,5 +60,22 @@ public class SrtSubtitleLogic {
         String fixedLine = "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
 
         return fixedLine;
+    }
+    private static String removeTags(String line){
+        String fixedLine = "";
+        if (line.contains("<i>")) {
+            String tempWord = "<i>" + " ";
+            line = line.replaceAll(tempWord, "");
+            tempWord = " " + "<i>";
+            line= line.replaceAll(tempWord, "");
+        }
+        /*if (line.contains("</i>")) {
+            String tempWord = "</i>" + " ";
+            line = line.replaceAll(tempWord, "");
+            tempWord = " " + "</i>";
+             line= line.replaceAll(tempWord, "");
+
+        }*/
+        return line;
     }
 }
