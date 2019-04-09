@@ -36,7 +36,7 @@ public class FixingSubtitles extends Gui{
         }
 
     }
-    private static String fixLine(String line) {
+    public static String fixLine(String line) {
         // Find closing brace
         int bracketFromIndex = line.indexOf('}');
         // Extract 'from' time
@@ -58,4 +58,36 @@ public class FixingSubtitles extends Gui{
 
         return fixedLine;
     }
+
+    public static String getFromTime(String line) {
+        // Find closing brace
+        int bracketFromIndex = line.indexOf('}');
+        // Extract 'from' time
+        String fromTime = line.substring(1,bracketFromIndex);
+
+        return fromTime;
+    }
+
+    public static String getToTime(String line) {
+        // Find closing brace
+        int bracketFromIndex = line.indexOf('}');
+        // Find the following closing brace
+        int bracketToIndex = line.indexOf('}', bracketFromIndex + 1);
+        // Extract 'to' time
+        String toTime = line.substring(bracketFromIndex + 2, bracketToIndex);
+
+        return toTime;
+    }
+
+    public static String makeSubsFaster(String line) {
+        String fromTime = getFromTime(line);
+        String toTime = getToTime(line);
+        // Calculate new 'from' time
+        int newFromTime = (((Integer.parseInt(fromTime)/60)*1000 + ADDITION)/1000)*60;
+        // Calculate new 'to' time
+        int newToTime = (Integer.parseInt(toTime)/60)*1000+ADDITION;
+        \
+    }
+
+
 }

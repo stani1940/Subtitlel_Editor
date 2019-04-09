@@ -13,7 +13,6 @@ public class App {
         Gui.setSubmitButton();
         Gui.setRemoveTagButton();
         Gui.getRadioButtonsValue();
-
     }
 }
 
