@@ -22,7 +22,7 @@ public class SrtSubtitleLogic {
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
-                String fixedLine = removeTags(line);
+                String fixedLine = fixLine(line);
                 fileOutput.println(fixedLine);
             }
         } catch (FileNotFoundException fnfe) {
@@ -39,43 +39,24 @@ public class SrtSubtitleLogic {
         }
     }
 
-    private static String fixLine(String line) { //TODO Trqbva tuk da se sloji logikata
-        // Find closing brace
-        int bracketFromIndex = line.indexOf('}');
-        // Extract 'from' time
-        String fromTime = line.substring(1,bracketFromIndex);
-        // Calculate new 'from' time
-        int newFromTime = (((Integer.parseInt(fromTime)/60)*1000 + ADDITION)/1000)*60;
-        System.out.println(newFromTime);
-        // Find the following closing brace
-        int bracketToIndex = line.indexOf('}', bracketFromIndex + 1);
+    private static String fixLine(String line) {
+        //TODO sloji logikata ot Testoviq fail
 
-        // Extract 'to' time
-        String toTime = line.substring(bracketFromIndex + 2, bracketToIndex);
-
-        // Calculate new 'to' time
-        int newToTime = (Integer.parseInt(toTime)/60)*1000+ADDITION;
-
-        // Create a new line using the new 'from' and 'to' times
-        String fixedLine = "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
-
-        return fixedLine;
+        return "";
     }
     private static String removeTags(String line){
-        String fixedLine = "";
         if (line.contains("<i>")) {
             String tempWord = "<i>" + " ";
             line = line.replaceAll(tempWord, "");
             tempWord = " " + "<i>";
             line= line.replaceAll(tempWord, "");
         }
-        /*if (line.contains("</i>")) {
+        if (line.contains("</i>")) {
             String tempWord = "</i>" + " ";
             line = line.replaceAll(tempWord, "");
             tempWord = " " + "</i>";
              line= line.replaceAll(tempWord, "");
-
-        }*/
+        }
         return line;
     }
 }
