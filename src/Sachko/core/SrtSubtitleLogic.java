@@ -22,8 +22,16 @@ public class SrtSubtitleLogic {
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
-                String fixedLine = fixLine(line);
-                fileOutput.println(fixedLine);
+                System.out.println(line);
+                if (line.contains(" --> ")){
+                    System.out.println("YEEEEEEEEEEEEEEEE");
+                    String fixedLine = fixLine(line);
+                    fileOutput.println(fixedLine);
+                } else {
+
+                    fileOutput.println(line);
+                }
+
             }
         } catch (FileNotFoundException fnfe) {
             System.err.println(fnfe.getMessage());
@@ -41,23 +49,17 @@ public class SrtSubtitleLogic {
 
 
         public static String fixLine (String string){
-            int index = string.indexOf('0'); //index of changes
-            int indexForStartOfSubstringLeft = index + 9;
-            int indexForEndOfSubstringLeft = index + 12;
-            String string2 = string.substring(indexForStartOfSubstringLeft, indexForEndOfSubstringLeft);
-            int leftSidedSeconds = Integer.parseInt(string2);
-            int indexForStartOfSubstringRight = index + 26;
-            int indexForEndOfSubstringRight = index + 29;
-            String string3 = string.substring(indexForStartOfSubstringRight, indexForEndOfSubstringRight);
-            int rightSidedSeconds = Integer.parseInt(string3);
-            String oldLeftSidedSecondsString = Integer.toString(leftSidedSeconds);
-            String oldRightSidedSecondsString = Integer.toString(rightSidedSeconds);
-            leftSidedSeconds = leftSidedSeconds + ADDITION;
-            rightSidedSeconds = rightSidedSeconds + ADDITION;
-            String newLeftSidedSecondsString = Integer.toString(leftSidedSeconds);
-            String newRightSidedSecondsString = Integer.toString(rightSidedSeconds);
-            string = string.replace(oldLeftSidedSecondsString, newLeftSidedSecondsString);
-            string = string.replace(oldRightSidedSecondsString, newRightSidedSecondsString);
+            int indexOfArrow = string.indexOf('-');
+            String leftMilSecond = string.substring(indexOfArrow - 4, indexOfArrow - 1);
+            String rightMilSecond = string.substring(string.length() - 3, string.length());
+            int LeftMilSeconds = Integer.parseInt(leftMilSecond);
+            int RightMilSeconds = Integer.parseInt(rightMilSecond);
+            LeftMilSeconds = LeftMilSeconds + ADDITION;
+            RightMilSeconds = RightMilSeconds + ADDITION;
+            String newLeftSeconds = Integer.toString(LeftMilSeconds);
+            String newRightSeconds = Integer.toString(RightMilSeconds);
+            string = string.replace(leftMilSecond, newLeftSeconds);
+            string = string.replace(rightMilSecond, newRightSeconds);
             return string;
         }
     }
