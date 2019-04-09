@@ -39,24 +39,25 @@ public class SrtSubtitleLogic {
         }
     }
 
-    private static String fixLine(String line) {
-        //TODO sloji logikata ot Testoviq fail
 
-        return "";
-    }
-    private static String removeTags(String line){
-        if (line.contains("<i>")) {
-            String tempWord = "<i>" + " ";
-            line = line.replaceAll(tempWord, "");
-            tempWord = " " + "<i>";
-            line= line.replaceAll(tempWord, "");
+        public static String fixLine (String string){
+            int index = string.indexOf('0'); //index of changes
+            int indexForStartOfSubstringLeft = index + 9;
+            int indexForEndOfSubstringLeft = index + 12;
+            String string2 = string.substring(indexForStartOfSubstringLeft, indexForEndOfSubstringLeft);
+            int leftSidedSeconds = Integer.parseInt(string2);
+            int indexForStartOfSubstringRight = index + 26;
+            int indexForEndOfSubstringRight = index + 29;
+            String string3 = string.substring(indexForStartOfSubstringRight, indexForEndOfSubstringRight);
+            int rightSidedSeconds = Integer.parseInt(string3);
+            String oldLeftSidedSecondsString = Integer.toString(leftSidedSeconds);
+            String oldRightSidedSecondsString = Integer.toString(rightSidedSeconds);
+            leftSidedSeconds = leftSidedSeconds + ADDITION;
+            rightSidedSeconds = rightSidedSeconds + ADDITION;
+            String newLeftSidedSecondsString = Integer.toString(leftSidedSeconds);
+            String newRightSidedSecondsString = Integer.toString(rightSidedSeconds);
+            string = string.replace(oldLeftSidedSecondsString, newLeftSidedSecondsString);
+            string = string.replace(oldRightSidedSecondsString, newRightSidedSecondsString);
+            return string;
         }
-        if (line.contains("</i>")) {
-            String tempWord = "</i>" + " ";
-            line = line.replaceAll(tempWord, "");
-            tempWord = " " + "</i>";
-             line= line.replaceAll(tempWord, "");
-        }
-        return line;
     }
-}
