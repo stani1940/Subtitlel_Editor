@@ -5,12 +5,15 @@ public class App {
         run();
 
 
+
     }
     public static void run(){
         Gui.setExitButton();
         Gui.setLoadFileButton();
         Gui.setSubmitButton();
         Gui.setRemoveTagButton();
+        Gui.getRadioButtonsValue();
+
     }
 }
 

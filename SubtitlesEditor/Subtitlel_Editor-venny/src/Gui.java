@@ -12,7 +12,7 @@ public class Gui extends Component {
     static JButton exitButton;
     static JButton submitButton;
     ButtonGroup buttonGroup;
-    JRadioButton fastRadioButton, slowRadioButton;
+    static JRadioButton fastRadioButton, slowRadioButton;
     static JCheckBox removeTagButton;
     static JTextField textField;
     JLabel textLabel;
@@ -72,6 +72,8 @@ public class Gui extends Component {
         exitButton.addActionListener(e -> {
             System.exit(0);
         });
+
+
     }
 
     public static void setLoadFileButton() {
@@ -85,14 +87,16 @@ public class Gui extends Component {
 
         });
     }
-     static JFileChooser fileChooser = new JFileChooser();
+
+    static JFileChooser fileChooser = new JFileChooser();
+
     private static void showOpenFileDialog() {
 
         fileChooser.setCurrentDirectory(new File(("src")));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.srt", "sub", "srt"));
         fileChooser.setAcceptAllFileFilterUsed(true);
-          int result =  fileChooser.showOpenDialog(null);
+        int result = fileChooser.showOpenDialog(null);
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
@@ -141,6 +145,15 @@ public class Gui extends Component {
                 }
             }
         });
+    }
+
+    public static void getRadioButtonsValue() {
+        if (fastRadioButton.isSelected()) {
+            //Code for the delay
+        } else if (slowRadioButton.isSelected()) {
+            //The other code
+        }
+
     }
 
 }
