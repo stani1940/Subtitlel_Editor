@@ -22,13 +22,10 @@ public class SrtSubtitleLogic {
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
-                System.out.println(line);
-                if (line.contains(" --> ")){
-                    System.out.println("YEEEEEEEEEEEEEEEE");
-                    String fixedLine = fixLine(line);
+                if (line.contains(" --> ")) {
+                    String fixedLine = fixLine(line, -2);
                     fileOutput.println(fixedLine);
                 } else {
-
                     fileOutput.println(line);
                 }
 
@@ -48,18 +45,18 @@ public class SrtSubtitleLogic {
     }
 
 
-        public static String fixLine (String string){
-            int indexOfArrow = string.indexOf('-');
-            String leftMilSecond = string.substring(indexOfArrow - 4, indexOfArrow - 1);
-            String rightMilSecond = string.substring(string.length() - 3, string.length());
-            int LeftMilSeconds = Integer.parseInt(leftMilSecond);
-            int RightMilSeconds = Integer.parseInt(rightMilSecond);
-            LeftMilSeconds = LeftMilSeconds + ADDITION;
-            RightMilSeconds = RightMilSeconds + ADDITION;
-            String newLeftSeconds = Integer.toString(LeftMilSeconds);
-            String newRightSeconds = Integer.toString(RightMilSeconds);
-            string = string.replace(leftMilSecond, newLeftSeconds);
-            string = string.replace(rightMilSecond, newRightSeconds);
-            return string;
-        }
+    public static String fixLine(String string, int milSeconds) {
+        int indexOfArrow = string.indexOf('-');
+        String leftMilSecond = string.substring(indexOfArrow - 4, indexOfArrow - 1);
+        String rightMilSecond = string.substring(string.length() - 3, string.length());
+        int LeftMilSeconds = Integer.parseInt(leftMilSecond);
+        int RightMilSeconds = Integer.parseInt(rightMilSecond);
+        LeftMilSeconds = LeftMilSeconds + milSeconds;
+        RightMilSeconds = RightMilSeconds + milSeconds;
+        String newLeftSeconds = Integer.toString(LeftMilSeconds);
+        String newRightSeconds = Integer.toString(RightMilSeconds);
+        string = string.replace(leftMilSecond, newLeftSeconds);
+        string = string.replace(rightMilSecond, newRightSeconds);
+        return string;
     }
+}
