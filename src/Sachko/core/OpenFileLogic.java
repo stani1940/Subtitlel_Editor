@@ -6,10 +6,11 @@ import java.io.IOException;
 
 public class OpenFileLogic {
 
+    public static String pathName = "src/Sachko/SRTtitles.srt";
 
-    public static void main(String[] args) throws IOException {
+    OpenFileLogic() {
         //text file, should be opening in default text editor
-        File file = new File("src/Sachko/SRTtitles.srt");
+        File file = new File(pathName);
 
         //first check if Desktop is supported by Platform or not
         if (!Desktop.isDesktopSupported()) {
@@ -20,6 +21,7 @@ public class OpenFileLogic {
         if (file.exists()) desktop.open(file);
 
     }
-
 }
+
+
 

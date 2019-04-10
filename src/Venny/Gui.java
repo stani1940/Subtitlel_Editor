@@ -27,6 +27,7 @@ public class Gui extends Component {
         loadFileButton = new JButton("Зареди файл");
         openFileButton = new JButton("Отвори файл");
         exitButton = new JButton("Изход");
+        exitButton = new JButton("Изход");
         submitButton = new JButton("Запиши промените");
         fastRadioButton = new JRadioButton("Забързай с");
         slowRadioButton = new JRadioButton("Забави с");
@@ -93,7 +94,7 @@ public class Gui extends Component {
 
         fileChooser.setCurrentDirectory(new File(("src")));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents with srt and sub", "sub", "srt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Subtitle Documents.srt", "sub", "srt"));
         fileChooser.setAcceptAllFileFilterUsed(true);
         int result = fileChooser.showOpenDialog(null);
 
@@ -109,51 +110,19 @@ public class Gui extends Component {
 
     }
 
-
-    private static String getFileExtension(JFileChooser fileChooser) {
-        String[] split = fileChooser.getSelectedFile().getName().split("\\.");
-        String ext = split[split.length - 1];
-        return ext;
-    }
-
-
-
     public static void setSubmitButton() {
         submitButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                new FixingSubtitles().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
 
-                String textMs = textField.getText();
+                new FixingSubtitles();
+                String textMs = textField.getText().trim();
 
                 if ((!textMs.isEmpty()) && (textMs != null)) {
-                    if (getRadioButtonsValue()) {
-                        int mSeconds = Integer.parseInt(textMs);
-                        if (getFileExtension(fileChooser).equals("sub")) {
-                            new FixingSubtitles().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
+                    int addition = Integer.parseInt(textMs);
 
-                            new FixingSubtitles().ADDITION = mSeconds;
-                            new FixingSubtitles();
-                        } else if(getFileExtension(fileChooser).equals("srt")){
-                            new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            new SrtSubtitleLogic().ADDITION = mSeconds;
-                            new SrtSubtitleLogic();
-                        }
-                    }
-                    if (!getRadioButtonsValue()){
-                        int mSeconds = -Integer.parseInt(textMs);
-                        if (getFileExtension(fileChooser).equals("sub")) {
-                            new FixingSubtitles().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            new FixingSubtitles().ADDITION = mSeconds;
-                        }else if (getFileExtension(fileChooser).equals("srt")){
-                            new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            new SrtSubtitleLogic().ADDITION = mSeconds;
-                            new SrtSubtitleLogic();
-                        }
-                    }
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Моля въведете число за милисекунди");
@@ -178,11 +147,11 @@ public class Gui extends Component {
         });
     }
 
-    public static boolean getRadioButtonsValue() {
+    public static void getRadioButtonsValue() {
         if (fastRadioButton.isSelected()) {
-            return true;
-        } else {
-            return false;
+            //Code for the delay
+        } else if (slowRadioButton.isSelected()) {
+            //The other code
         }
 
     }
