@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class FixingSubtitles extends Gui {
-    private static final int ADDITION = 2;
+    private static int addition;
     public static String INPUT_FILE = "";
     private static final String OUTPUT_FILE = "fixed.sub";
 
@@ -38,8 +38,8 @@ public class FixingSubtitles extends Gui {
     }
 
     public static int getMilliseconds() {
-        int milliseconds = (Integer.parseInt(textField.getText()));
-        return milliseconds;
+        addition = (Integer.parseInt(textField.getText()));
+        return addition;
     }
 
     public static String getFromTime(String line) {
@@ -62,7 +62,7 @@ public class FixingSubtitles extends Gui {
         return toTime;
     }
 
-    public static String makeSubsFaster(String line) {
+    public static String makeSubsSlower(String line) {
         int milliseconds = getMilliseconds();
         int bracketFromIndex = line.indexOf('}');
         int bracketToIndex = line.indexOf('}', bracketFromIndex + 1);
@@ -79,16 +79,16 @@ public class FixingSubtitles extends Gui {
 
     }
 
-    public static String makeSubsSlower(String line) {
-        int milliseconds = getMilliseconds();
+    public static String makeSubsFaster(String line) {
+        addition = getMilliseconds();
         int bracketFromIndex = line.indexOf('}');
         int bracketToIndex = line.indexOf('}', bracketFromIndex + 1);
         String fromTime = getFromTime(line);
         String toTime = getToTime(line);
         // Calculate new 'from' time
-        int newFromTime = (((Integer.parseInt(fromTime) / 60) * 1000 - milliseconds) / 1000) * 60;
+        int newFromTime = (((Integer.parseInt(fromTime) / 60) * 1000 - addition) / 1000) * 60;
         // Calculate new 'to' time
-        int newToTime = (Integer.parseInt(toTime) / 60) * 1000 - milliseconds;
+        int newToTime = (Integer.parseInt(toTime) / 60) * 1000 - addition;
         // Create a new line using the new 'from' and 'to' times
         String fixedLine = "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
 
