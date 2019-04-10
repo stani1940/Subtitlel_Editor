@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class SrtSubtitleLogic {
-    private static final int ADDITION = 2;
+    private static int ADDITION = 2;
     private static final String INPUT_FILE = "src/Sachko/SRTtitles.srt";
     private static final String OUTPUT_FILE = "src/Sachko/fixed.srt";
 
@@ -23,7 +23,7 @@ public class SrtSubtitleLogic {
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
                 if (line.contains(" --> ")) {
-                    String fixedLine = fixLine(line, -2);
+                    String fixedLine = fixLine(line);
                     fileOutput.println(fixedLine);
                 } else {
                     fileOutput.println(line);
@@ -45,14 +45,14 @@ public class SrtSubtitleLogic {
     }
 
 
-    public static String fixLine(String string, int milSeconds) {
+    public static String fixLine(String string) {
         int indexOfArrow = string.indexOf('-');
         String leftMilSecond = string.substring(indexOfArrow - 4, indexOfArrow - 1);
         String rightMilSecond = string.substring(string.length() - 3, string.length());
         int LeftMilSeconds = Integer.parseInt(leftMilSecond);
         int RightMilSeconds = Integer.parseInt(rightMilSecond);
-        LeftMilSeconds = LeftMilSeconds + milSeconds;
-        RightMilSeconds = RightMilSeconds + milSeconds;
+        LeftMilSeconds = LeftMilSeconds + ADDITION;
+        RightMilSeconds = RightMilSeconds + ADDITION;
         String newLeftSeconds = Integer.toString(LeftMilSeconds);
         String newRightSeconds = Integer.toString(RightMilSeconds);
         string = string.replace(leftMilSecond, newLeftSeconds);
