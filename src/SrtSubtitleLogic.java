@@ -5,9 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class SrtSubtitleLogic extends Gui {
-    public static int ADDITION;
-    public static  String INPUT_FILE = "";
-    private static final String OUTPUT_FILE = "fixed.srt";
+    public  int ADDITION;
+    public   String INPUT_FILE = "";
+    private  final String OUTPUT_FILE = "fixed.srt";
 
     SrtSubtitleLogic() {
         Scanner fileInput = null;
@@ -43,7 +43,7 @@ public class SrtSubtitleLogic extends Gui {
     }
 
 
-    public static String fixLine(String string) {
+    public  String fixLine(String string) {
         int indexOfArrow = string.indexOf('-');
         String leftMilSecond = string.substring(indexOfArrow - 4, indexOfArrow - 1);
         String rightMilSecond = string.substring(string.length() - 3, string.length());

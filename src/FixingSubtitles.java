@@ -5,16 +5,19 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class FixingSubtitles extends Gui{
-    public static  int ADDITION;
-    public static String INPUT_FILE = "";
-    private static final String OUTPUT_FILE = "fixed.sub";
 
-    FixingSubtitles() {
+
+    public static int ADDITION;
+    public static String INPUT_FILE = "";
+
+    private  final static String OUTPUT_FILE = "fixed.sub";
+     FixingSubtitles() {
         Scanner fileInput = null;
         PrintStream fileOutput = null;
         try {
             // Create scanner with the Cyrillic encoding
             fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
+            System.out.println(INPUT_FILE);
             fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
             String line;
             while (fileInput.hasNextLine()) {
@@ -34,7 +37,7 @@ public class FixingSubtitles extends Gui{
         }
 
     }
-    private static String fixLine(String line) {
+    private  String fixLine(String line) {
         // Find closing brace
         int bracketFromIndex = line.indexOf('}');
         // Extract 'from' time
@@ -51,7 +54,6 @@ public class FixingSubtitles extends Gui{
         int newToTime = (Integer.parseInt(toTime)/60)*1000+ADDITION;
         // Create a new line using the new 'from' and 'to' times
         String fixedLine = "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
-
         return fixedLine;
     }
 }

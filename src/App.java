@@ -1,16 +1,14 @@
 public class App {
 
     public static void main(String[] args) {
-        new Gui();
-        run();
 
+        Gui gui = new Gui();
+        gui.setExitButton();
+        gui.setLoadFileButton();
+        gui.setSubmitButton();
+        gui.setRemoveTagButton();
 
     }
-    public static void run(){
-        Gui.setExitButton();
-        Gui.setLoadFileButton();
-        Gui.setSubmitButton();
-        Gui.setRemoveTagButton();
-    }
+
 }
 

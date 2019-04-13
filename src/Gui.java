@@ -7,17 +7,16 @@ import java.io.File;
 
 public class Gui extends Component {
 
-    static JButton loadFileButton;
+    JButton loadFileButton;
     JButton openFileButton;
-    static JButton exitButton;
-    static JButton submitButton;
+    JButton exitButton;
+    JButton submitButton;
     ButtonGroup buttonGroup;
-    static JRadioButton fastRadioButton, slowRadioButton;
-    static JCheckBox removeTagButton;
-    static JTextField textField;
+    JRadioButton fastRadioButton, slowRadioButton;
+    JCheckBox removeTagButton;
+    JTextField textField;
     JLabel textLabel;
-    //static JFileChooser fileChooser;
-    static JTextArea log;
+    JTextArea log;
 
 
     Gui() {
@@ -66,7 +65,7 @@ public class Gui extends Component {
         frame.setVisible(true);
     }
 
-    public static void setExitButton() {
+    public void setExitButton() {
 
         exitButton.addActionListener(e -> {
             System.exit(0);
@@ -75,7 +74,7 @@ public class Gui extends Component {
 
     }
 
-    public static void setLoadFileButton() {
+    public void setLoadFileButton() {
         loadFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -87,9 +86,9 @@ public class Gui extends Component {
         });
     }
 
-    static JFileChooser fileChooser = new JFileChooser();
+    JFileChooser fileChooser = new JFileChooser();
 
-    private static void showOpenFileDialog() {
+    private void showOpenFileDialog() {
 
         fileChooser.setCurrentDirectory(new File(("src")));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -110,15 +109,14 @@ public class Gui extends Component {
     }
 
 
-    private static String getFileExtension(JFileChooser fileChooser) {
+    private String getFileExtension(JFileChooser fileChooser) {
         String[] split = fileChooser.getSelectedFile().getName().split("\\.");
         String ext = split[split.length - 1];
         return ext;
     }
 
 
-
-    public static void setSubmitButton() {
+    public void setSubmitButton() {
         submitButton.addActionListener(new ActionListener() {
 
             @Override
@@ -130,24 +128,24 @@ public class Gui extends Component {
                     if (getRadioButtonsValue()) {
                         int mSeconds = Integer.parseInt(textMs);
                         if (getFileExtension(fileChooser).equals("sub")) {
-                            new FixingSubtitles().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            new FixingSubtitles().ADDITION = mSeconds;
+                            FixingSubtitles.ADDITION = mSeconds;
+                            FixingSubtitles.INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
                             new FixingSubtitles();
-                        } else if(getFileExtension(fileChooser).equals("srt")){
+
+                        } else if (getFileExtension(fileChooser).equals("srt")) {
                             new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
 
                             new SrtSubtitleLogic().ADDITION = mSeconds;
                             new SrtSubtitleLogic();
                         }
                     }
-                    if (!getRadioButtonsValue()){
+                    if (!getRadioButtonsValue()) {
                         int mSeconds = -Integer.parseInt(textMs);
                         if (getFileExtension(fileChooser).equals("sub")) {
                             new FixingSubtitles().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
 
                             new FixingSubtitles().ADDITION = mSeconds;
-                        }else if (getFileExtension(fileChooser).equals("srt")){
+                        } else if (getFileExtension(fileChooser).equals("srt")) {
                             new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
 
                             new SrtSubtitleLogic().ADDITION = mSeconds;
@@ -162,7 +160,7 @@ public class Gui extends Component {
         });
     }
 
-    public static void setRemoveTagButton() {
+    public void setRemoveTagButton() {
         removeTagButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -178,7 +176,7 @@ public class Gui extends Component {
         });
     }
 
-    public static boolean getRadioButtonsValue() {
+    public boolean getRadioButtonsValue() {
         if (fastRadioButton.isSelected()) {
             return true;
         } else {
