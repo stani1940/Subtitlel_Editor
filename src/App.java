@@ -6,6 +6,7 @@ public class App {
         gui.drawAndShowGui();
         gui.setExitButton();
         gui.setLoadFileButton();
+        gui.setOpenFileButton();
         gui.setSubmitButton();
         gui.setRemoveTagButton();
 

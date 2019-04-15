@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.io.IOException;
 
 
 public class Gui extends Component {
@@ -35,7 +36,6 @@ public class Gui extends Component {
         JLabel textLabel = new JLabel("Developed by Alexander, Venelina and Stanislav");
         log = new JTextArea(5, 20);
         log.setFont(new Font("Arial", Font.BOLD, 20));
-
         loadFileButton.setBounds(50, 20, 250, 100);
         loadFileButton.setFont(new Font("Arial", Font.BOLD, 25));
         openFileButton.setBounds(50, 130, 250, 100);
@@ -111,49 +111,25 @@ public class Gui extends Component {
         String[] split = fileChooser.getSelectedFile().getName().split("\\.");
         return split[split.length - 1];
     }
+    public void openFile(){
+        File file = new File("fixed.sub");
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setOpenFileButton(){
+        openFileButton.addActionListener(e ->{
+            openFile();
+        });
+    }
 
     public void setSubmitButton() {
-        submitButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String textMs = textField.getText();
-
-                if ((!textMs.isEmpty()) && (textMs != null)) {
-                    if (getRadioButtonsValue()) {
-                        int mSeconds = Integer.parseInt(textMs);
-                        if (getFileExtension(fileChooser).equals("sub")) {
-                            FixingSubtitles.ADDITION = mSeconds;
-                            FixingSubtitles.INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-                            new FixingSubtitles();
-
-                        } else if (getFileExtension(fileChooser).equals("srt")) {
-                            new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            new SrtSubtitleLogic().ADDITION = mSeconds;
-                            new SrtSubtitleLogic();
-                        }
-                    }
-                    if (!getRadioButtonsValue()) {
-                        int mSeconds = -Integer.parseInt(textMs);
-                        if (getFileExtension(fileChooser).equals("sub")) {
-                            FixingSubtitles.INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            FixingSubtitles.ADDITION = mSeconds;
-                            new FixingSubtitles();
-                        } else if (getFileExtension(fileChooser).equals("srt")) {
-                            new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
-
-                            new SrtSubtitleLogic().ADDITION = mSeconds;
-                            new SrtSubtitleLogic();
-                        }
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Моля въведете число за милисекунди");
-                }
-            }
+        submitButton.addActionListener(e -> {
+                editLoadedFile();
         });
     }
 
@@ -170,6 +146,44 @@ public class Gui extends Component {
                 }
             }
         });
+    }
+    private void editLoadedFile(){
+
+        String textMs = textField.getText();
+
+        if ((!textMs.isEmpty()) && (textMs != null)) {
+            if (getRadioButtonsValue()) {
+                int mSeconds = Integer.parseInt(textMs);
+                if (getFileExtension(fileChooser).equals("sub")) {
+                    FixingSubtitles.ADDITION = mSeconds;
+                    FixingSubtitles.INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
+                    new FixingSubtitles();
+
+                } else if (getFileExtension(fileChooser).equals("srt")) {
+                    new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
+
+                    new SrtSubtitleLogic().ADDITION = mSeconds;
+                    new SrtSubtitleLogic();
+                }
+            }
+            if (!getRadioButtonsValue()) {
+                int mSeconds = -Integer.parseInt(textMs);
+                if (getFileExtension(fileChooser).equals("sub")) {
+                    FixingSubtitles.INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
+
+                    FixingSubtitles.ADDITION = mSeconds;
+                    new FixingSubtitles();
+                } else if (getFileExtension(fileChooser).equals("srt")) {
+                    new SrtSubtitleLogic().INPUT_FILE = String.valueOf(fileChooser.getSelectedFile());
+
+                    new SrtSubtitleLogic().ADDITION = mSeconds;
+                    new SrtSubtitleLogic();
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Моля въведете число за милисекунди");
+        }
     }
 
     private boolean getRadioButtonsValue() {
