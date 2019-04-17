@@ -25,7 +25,6 @@ public class Controller {
         view.getExitButton().addActionListener(e -> System.exit(0));
     }
 
-
     private void setLoadFileButton() {
         view.getLoadFileButton().addActionListener(e -> showOpenFileDialog());
     }
@@ -49,7 +48,7 @@ public class Controller {
         String[] split = fileChooser.getSelectedFile().getName().split("\\.");
         return split[split.length - 1];
     }
-    public void openFile(){
+    private void openFile(){
         File file = new File("fixed.sub");
         try {
             Desktop desktop = Desktop.getDesktop();
@@ -68,21 +67,22 @@ public class Controller {
     }
 
     public void setRemoveTagButton() {
-        view.getRemoveTagButton().addActionListener(e -> {
-            if (view.getRemoveTagButton().isSelected()) {
-                String text = "";
-                text = text.replaceAll("\\<.*?\\>", "");
-                System.out.println(text);
-            } else {
-                System.out.println("no");
-            }
-        });
+        view.getRemoveTagButton().addActionListener(e -> removeTagsFromFile());
+    }
+    private void removeTagsFromFile(){
+        if (view.getRemoveTagButton().isSelected()) {
+            String text = "";
+            text = text.replaceAll("\\<.*?\\>", "");
+            System.out.println(text);
+        } else {
+            System.out.println("no");
+        }
     }
     private void editLoadedFile(){
 
         String textMs = view.getTextField().getText();
-
-        if ((!textMs.isEmpty()) && (textMs != null)) {
+        validateChooseRadioButtons();
+        if (!textMs.isEmpty()) {
             if (getRadioButtonsValue()) {
                 int mSeconds = Integer.parseInt(textMs);
                 setProperties(mSeconds);
@@ -109,12 +109,12 @@ public class Controller {
             model.srtSubtitleLogic();
         }
     }
-
-    private boolean getRadioButtonsValue() {
-        if (view.getSlowRadioButton().isSelected()) {
-            return true;
-        } else {
-            return false;
+    private void validateChooseRadioButtons(){
+        if (!view.getFastRadioButton().isSelected()&& !view.getSlowRadioButton().isSelected()){
+            JOptionPane.showMessageDialog(null, "Моля изберете опция за забързване или забавяне");
         }
+    }
+    private boolean getRadioButtonsValue() {
+        return view.getSlowRadioButton().isSelected();
     }
 }

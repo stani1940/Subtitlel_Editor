@@ -1,25 +1,19 @@
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import java.io.IOException;
 
-
-public class View extends Component  {
+public class View extends Component {
 
     private JButton loadFileButton;
     private JButton openFileButton;
     private JButton exitButton;
     private JButton submitButton;
-    private ButtonGroup buttonGroup;
     private JRadioButton fastRadioButton, slowRadioButton;
     private JCheckBox removeTagButton;
     private JTextField textField;
     private JTextArea log;
     private JFileChooser fileChooser = new JFileChooser();
 
-     public View() {
+    public View() {
         JFrame frame = new JFrame("Редактор на субтитри");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loadFileButton = new JButton("Зареди файл");
@@ -28,7 +22,7 @@ public class View extends Component  {
         submitButton = new JButton("Запиши промените");
         fastRadioButton = new JRadioButton("Забързай с");
         slowRadioButton = new JRadioButton("Забави с");
-        buttonGroup = new ButtonGroup();
+        ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(fastRadioButton);
         buttonGroup.add(slowRadioButton);
         JLabel textLabelMSeconds = new JLabel("Mилисекунди");
@@ -46,20 +40,20 @@ public class View extends Component  {
         exitButton.setFont(new Font("Arial", Font.BOLD, 30));
         textField.setBounds(510, 20, 50, 100);
         textField.setFont(new Font("Arial", Font.BOLD, 40));
-        textLabelMSeconds.setBounds(570,20,150,100);
+        textLabelMSeconds.setBounds(570, 20, 150, 100);
         textLabelMSeconds.setFont(new Font("Arial", Font.BOLD, 20));
         submitButton.setBounds(50, 350, 250, 100);
         submitButton.setFont(new Font("Arial", Font.BOLD, 20));
         submitButton.setBackground(Color.GREEN);
         fastRadioButton.setBounds(350, 20, 150, 60);
-        fastRadioButton.setFont(new Font("Arial", Font.BOLD, 20));;
+        fastRadioButton.setFont(new Font("Arial", Font.BOLD, 20));
         slowRadioButton.setBounds(350, 60, 150, 60);
         slowRadioButton.setFont(new Font("Arial", Font.BOLD, 20));
         removeTagButton = new JCheckBox("Премахни таговете от текста");
         removeTagButton.setBounds(350, 130, 350, 100);
         removeTagButton.setFont(new Font("Arial", Font.BOLD, 22));
         log.setBounds(350, 350, 350, 100);
-        textLabel.setBounds(300,500,600,50);
+        textLabel.setBounds(300, 500, 600, 50);
         textLabel.setFont(new Font("Arial", Font.BOLD, 20));
         frame.add(loadFileButton);
         frame.add(openFileButton);
@@ -98,23 +92,23 @@ public class View extends Component  {
 
     public JRadioButton getFastRadioButton() {
 
-         return fastRadioButton;
+        return fastRadioButton;
     }
 
 
     public JRadioButton getSlowRadioButton() {
 
-         return slowRadioButton;
+        return slowRadioButton;
     }
 
     public JCheckBox getRemoveTagButton() {
 
-         return removeTagButton;
+        return removeTagButton;
     }
 
     public JTextField getTextField() {
 
-         return textField;
+        return textField;
     }
 
     public JTextArea getLog() {
@@ -123,7 +117,7 @@ public class View extends Component  {
 
     public JFileChooser getFileChooser() {
 
-         return fileChooser;
+        return fileChooser;
     }
 
 }

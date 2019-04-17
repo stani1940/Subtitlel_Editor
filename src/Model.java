@@ -8,28 +8,17 @@ public class Model {
 
 
     public int ADDITION;
-    public    String INPUT_FILE = "";
-    public   String OUTPUT_FILE = "";
+    public String INPUT_FILE = "";
+    public String OUTPUT_FILE = "";
 
     public Model() {
-        this.ADDITION=ADDITION;
-        this.INPUT_FILE =INPUT_FILE;
-        this.OUTPUT_FILE=OUTPUT_FILE;
-    }
 
-    public int getADDITION() {
-        return ADDITION;
-    }
-
-    public String getOUTPUT_FILE() {
-        return OUTPUT_FILE;
     }
 
     public void setADDITION(int ADDITION) {
 
         this.ADDITION = ADDITION;
     }
-
 
     public void setINPUT_FILE(String INPUT_FILE) {
 
@@ -66,13 +55,14 @@ public class Model {
         }
 
     }
-    private  String fixLine(String line) {
+
+    private String fixLine(String line) {
         // Find closing brace
         int bracketFromIndex = line.indexOf('}');
         // Extract 'from' time
-        String fromTime = line.substring(1,bracketFromIndex);
+        String fromTime = line.substring(1, bracketFromIndex);
         // Calculate new 'from' time
-        int newFromTime = (((Integer.parseInt(fromTime)/60)*1000 + ADDITION)/1000)*60;
+        int newFromTime = (((Integer.parseInt(fromTime) / 60) * 1000 + ADDITION) / 1000) * 60;
         System.out.println(ADDITION);
         // Find the following closing brace
         int bracketToIndex = line.indexOf('}', bracketFromIndex + 1);
@@ -81,11 +71,11 @@ public class Model {
         String toTime = line.substring(bracketFromIndex + 2, bracketToIndex);
 
         // Calculate new 'to' time
-        int newToTime = (Integer.parseInt(toTime)/60)*1000+ADDITION;
+        int newToTime = (Integer.parseInt(toTime) / 60) * 1000 + ADDITION;
         // Create a new line using the new 'from' and 'to' times
-        String fixedLine = "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
-        return fixedLine;
+        return "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
     }
+
     void srtSubtitleLogic() {
         Scanner fileInput = null;
         PrintStream fileOutput = null;
@@ -105,10 +95,8 @@ public class Model {
                 }
 
             }
-        } catch (FileNotFoundException fnfe) {
+        } catch (FileNotFoundException | UnsupportedEncodingException fnfe) {
             System.err.println(fnfe.getMessage());
-        } catch (UnsupportedEncodingException uee) {
-            System.err.println(uee.getMessage());
         } finally {
             if (null != fileInput) {
                 fileInput.close();
@@ -119,7 +107,7 @@ public class Model {
         }
     }
 
-    private   String fixSrtLine(String string) {
+    private String fixSrtLine(String string) {
         int indexOfArrow = string.indexOf('-');
         String leftMilSecond = string.substring(indexOfArrow - 4, indexOfArrow - 1);
         String rightMilSecond = string.substring(string.length() - 3, string.length());
