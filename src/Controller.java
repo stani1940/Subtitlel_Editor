@@ -67,15 +67,13 @@ public class Controller {
     }
 
     public void setRemoveTagButton() {
-        view.getRemoveTagButton().addActionListener(e -> removeTagsFromFile());
+        view.getRemoveTagButton().addActionListener(e -> removeTagsFromLoadedFile());
     }
-    private void removeTagsFromFile(){
+    private void removeTagsFromLoadedFile(){
         if (view.getRemoveTagButton().isSelected()) {
-            String text = "";
-            text = text.replaceAll("\\<.*?\\>", "");
-            System.out.println(text);
-        } else {
-            System.out.println("no");
+            model.setINPUT_FILE(String.valueOf(view.getFileChooser().getSelectedFile()));
+            model.setOUTPUT_FILE("fixed.sub");
+            model.removeTagsFromFile();
         }
     }
     private void editLoadedFile(){
@@ -102,7 +100,7 @@ public class Controller {
         model.setINPUT_FILE(String.valueOf(view.getFileChooser().getSelectedFile()));
         if (getFileExtension(view.getFileChooser()).equals("sub")) {
             model.setOUTPUT_FILE("fixed.sub");
-            model.FixSubtitles();
+            model.fixSubtitles();
 
         } else if (getFileExtension(view.getFileChooser()).equals("srt")) {
             model.setOUTPUT_FILE("fixed.srt");

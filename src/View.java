@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class View extends Component {
+class View extends Component {
 
     private JButton loadFileButton;
     private JButton openFileButton;
@@ -74,23 +74,23 @@ public class View extends Component {
         frame.setVisible(true);
     }
 
-    public JButton getLoadFileButton() {
+     JButton getLoadFileButton() {
         return loadFileButton;
     }
 
-    public JButton getOpenFileButton() {
+     JButton getOpenFileButton() {
         return openFileButton;
     }
 
-    public JButton getExitButton() {
+     JButton getExitButton() {
         return exitButton;
     }
 
-    public JButton getSubmitButton() {
+     JButton getSubmitButton() {
         return submitButton;
     }
 
-    public JRadioButton getFastRadioButton() {
+     JRadioButton getFastRadioButton() {
 
         return fastRadioButton;
     }

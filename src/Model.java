@@ -29,13 +29,12 @@ public class Model {
         this.OUTPUT_FILE = OUTPUT_FILE;
     }
 
-    void FixSubtitles() {
+    void fixSubtitles() {
         Scanner fileInput = null;
         PrintStream fileOutput = null;
         try {
             // Create scanner with the Cyrillic encoding
             fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
-            System.out.println(INPUT_FILE);
             fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
             String line;
             while (fileInput.hasNextLine()) {
@@ -121,4 +120,32 @@ public class Model {
         string = string.replace(rightMilSecond, newRightSeconds);
         return string;
     }
+
+    public void removeTagsFromFile() {
+        Scanner fileInput = null;
+        PrintStream fileOutput = null;
+
+        try {
+            // Create scanner with the Cyrillic encoding
+            fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
+            fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
+            String line;
+            while (fileInput.hasNextLine()) {
+                line = fileInput.nextLine();
+                String fixedLine = line.replaceAll("<.*?>", "");
+                fileOutput.println(fixedLine);
+            }
+        } catch (FileNotFoundException | UnsupportedEncodingException fnfe) {
+            System.err.println(fnfe.getMessage());
+        } finally {
+            if (null != fileInput) {
+                fileInput.close();
+            }
+            if (null != fileOutput) {
+                fileOutput.close();
+            }
+        }
+
+    }
+
 }
