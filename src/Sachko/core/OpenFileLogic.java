@@ -8,7 +8,7 @@ public class OpenFileLogic {
 
     public static String pathName = "src/Sachko/SRTtitles.srt";
 
-    OpenFileLogic() {
+    OpenFileLogic() throws IOException {
         //text file, should be opening in default text editor
         File file = new File(pathName);
 
