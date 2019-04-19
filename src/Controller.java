@@ -48,17 +48,29 @@ public class Controller {
         String[] split = fileChooser.getSelectedFile().getName().split("\\.");
         return split[split.length - 1];
     }
-    private void openFile(){
-        File file = new File("fixed.sub");
-        try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.open(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    private void openFile() {
+        if (getFileExtension(view.getFileChooser()).equals("sub")) {
+            File file = new File("fixed.sub");
+            try {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            File file = new File("fixed.srt");
+            try {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
-    public void setOpenFileButton(){
+    public void setOpenFileButton() {
         view.getOpenFileButton().addActionListener(e -> openFile());
     }
 
@@ -69,14 +81,23 @@ public class Controller {
     public void setRemoveTagButton() {
         view.getRemoveTagButton().addActionListener(e -> removeTagsFromLoadedFile());
     }
-    private void removeTagsFromLoadedFile(){
+
+    private void removeTagsFromLoadedFile() {
         if (view.getRemoveTagButton().isSelected()) {
             model.setINPUT_FILE(String.valueOf(view.getFileChooser().getSelectedFile()));
-            model.setOUTPUT_FILE("fixed.sub");
-            model.removeTagsFromFile();
+            if (getFileExtension(view.getFileChooser()).equals("sub")) {
+                model.setOUTPUT_FILE("fixed.sub");
+                model.removeTagsFromFile();
+            }
+            if (getFileExtension(view.getFileChooser()).equals("srt")) {
+                model.setOUTPUT_FILE("fixed.srt");
+                model.removeTagsFromFile();
+            }
+
         }
     }
-    private void editLoadedFile(){
+
+    private void editLoadedFile() {
 
         String textMs = view.getTextField().getText();
         validateChooseRadioButtons();
@@ -101,17 +122,19 @@ public class Controller {
         if (getFileExtension(view.getFileChooser()).equals("sub")) {
             model.setOUTPUT_FILE("fixed.sub");
             model.fixSubtitles();
-
-        } else if (getFileExtension(view.getFileChooser()).equals("srt")) {
+        }
+        if (getFileExtension(view.getFileChooser()).equals("srt")) {
             model.setOUTPUT_FILE("fixed.srt");
             model.srtSubtitleLogic();
         }
     }
-    private void validateChooseRadioButtons(){
-        if (!view.getFastRadioButton().isSelected()&& !view.getSlowRadioButton().isSelected()){
+
+    private void validateChooseRadioButtons() {
+        if (!view.getFastRadioButton().isSelected() && !view.getSlowRadioButton().isSelected()) {
             JOptionPane.showMessageDialog(null, "Моля изберете опция за забързване или забавяне");
         }
     }
+
     private boolean getRadioButtonsValue() {
         return view.getSlowRadioButton().isSelected();
     }
