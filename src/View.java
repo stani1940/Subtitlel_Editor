@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 class View extends Component {
-
+    private JFrame frame;
     private JButton loadFileButton;
     private JButton openFileButton;
     private JButton exitButton;
@@ -10,12 +10,24 @@ class View extends Component {
     private JRadioButton fastRadioButton, slowRadioButton;
     private JCheckBox removeTagButton;
     private JTextField textField;
+    private JLabel textLabelMSeconds;
+    private JLabel textLabel;
     private JTextArea log;
     private JFileChooser fileChooser = new JFileChooser();
 
     public View() {
-        JFrame frame = new JFrame("Редактор на субтитри");
+        frame = new JFrame("Редактор на субтитри");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        initComponents();
+        addComponents();
+        frame.setSize(800, 600);
+        frame.getContentPane().setBackground(Color.gray);
+        frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
+        frame.setVisible(true);
+    }
+    private void initComponents() {
         loadFileButton = new JButton("Зареди файл");
         openFileButton = new JButton("Отвори файл");
         exitButton = new JButton("Изход");
@@ -25,9 +37,9 @@ class View extends Component {
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(fastRadioButton);
         buttonGroup.add(slowRadioButton);
-        JLabel textLabelMSeconds = new JLabel("Mилисекунди");
+        textLabelMSeconds = new JLabel("Mилисекунди");
         textField = new JTextField();
-        JLabel textLabel = new JLabel("Developed by Alexander, Venelina and Stanislav");
+        textLabel = new JLabel("Developed by Alexander, Venelina and Stanislav");
         log = new JTextArea(5, 20);
         log.setFont(new Font("Arial", Font.BOLD, 20));
         loadFileButton.setBounds(50, 20, 250, 100);
@@ -55,6 +67,9 @@ class View extends Component {
         log.setBounds(350, 350, 350, 100);
         textLabel.setBounds(300, 500, 600, 50);
         textLabel.setFont(new Font("Arial", Font.BOLD, 20));
+    }
+
+    private void addComponents(){
         frame.add(loadFileButton);
         frame.add(openFileButton);
         frame.add(exitButton);
@@ -66,12 +81,6 @@ class View extends Component {
         frame.add(removeTagButton);
         frame.add(textLabelMSeconds);
         frame.add(textLabel);
-        frame.setSize(800, 600);
-        frame.getContentPane().setBackground(Color.gray);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setVisible(true);
     }
 
      JButton getLoadFileButton() {
