@@ -15,6 +15,7 @@ public class Controller {
     }
 
     public void initController() {
+        verifyTextField();
         setExitButton();
         setLoadFileButton();
         setOpenFileButton();
@@ -105,13 +106,33 @@ public class Controller {
         }
     }
 
+    private void verifyTextField() {
+
+        InputVerifier verifier = new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                String textMs = view.getTextField().getText().trim();
+                try {
+                    Integer.parseInt(textMs);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Трябва да въведете число!");
+                    return false;
+                }
+                return true;
+            }
+        };
+        view.getTextField().setInputVerifier(verifier);
+    }
+
+
     private void editLoadedFile() {
         textFieldValidation();
         validateChooseRadioButtons();
         check();
 
     }
-    private void check(){
+
+    private void check() {
         String textMs = view.getTextField().getText().trim();
         if (getRadioButtonsValue()) {
             setProperties(Integer.parseInt(textMs));

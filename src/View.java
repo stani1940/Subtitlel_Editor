@@ -26,7 +26,7 @@ class View extends Component {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         showFrame();
-        verifyTextField();
+
     }
 
     private void initComponents() {
@@ -88,23 +88,6 @@ class View extends Component {
 
     private void showFrame() {
         frame.setVisible(true);
-    }
-    private void verifyTextField() {
-
-        InputVerifier verifier = new InputVerifier() {
-            @Override
-            public boolean verify(JComponent input) {
-                String textMs = textField.getText().trim();
-                try {
-                    Integer.parseInt(textMs);
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Трябва да въведете число!");
-                    return false;
-                }
-                return true;
-            }
-        };
-        textField.setInputVerifier(verifier);
     }
 
     JButton getLoadFileButton() {
