@@ -25,8 +25,10 @@ class View extends Component {
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
-        frame.setVisible(true);
+        showFrame();
+        verifyTextField();
     }
+
     private void initComponents() {
         loadFileButton = new JButton("Зареди файл");
         openFileButton = new JButton("Отвори файл");
@@ -69,7 +71,8 @@ class View extends Component {
         textLabel.setFont(new Font("Arial", Font.BOLD, 20));
     }
 
-    private void addComponents(){
+
+    private void addComponents() {
         frame.add(loadFileButton);
         frame.add(openFileButton);
         frame.add(exitButton);
@@ -83,23 +86,44 @@ class View extends Component {
         frame.add(textLabel);
     }
 
-     JButton getLoadFileButton() {
+    private void showFrame() {
+        frame.setVisible(true);
+    }
+    private void verifyTextField() {
+
+        InputVerifier verifier = new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                String textMs = textField.getText().trim();
+                try {
+                    Integer.parseInt(textMs);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Трябва да въведете число!");
+                    return false;
+                }
+                return true;
+            }
+        };
+        textField.setInputVerifier(verifier);
+    }
+
+    JButton getLoadFileButton() {
         return loadFileButton;
     }
 
-     JButton getOpenFileButton() {
+    JButton getOpenFileButton() {
         return openFileButton;
     }
 
-     JButton getExitButton() {
+    JButton getExitButton() {
         return exitButton;
     }
 
-     JButton getSubmitButton() {
+    JButton getSubmitButton() {
         return submitButton;
     }
 
-     JRadioButton getFastRadioButton() {
+    JRadioButton getFastRadioButton() {
 
         return fastRadioButton;
     }
@@ -116,7 +140,6 @@ class View extends Component {
     }
 
     public JTextField getTextField() {
-
         return textField;
     }
 
@@ -125,7 +148,6 @@ class View extends Component {
     }
 
     public JFileChooser getFileChooser() {
-
         return fileChooser;
     }
 

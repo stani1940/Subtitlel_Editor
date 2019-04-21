@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import javax.swing.InputVerifier;
 import java.io.File;
 import java.io.IOException;
 
@@ -97,22 +98,27 @@ public class Controller {
         }
     }
 
-    private void editLoadedFile() {
-
-        String textMs = view.getTextField().getText();
-        validateChooseRadioButtons();
-        if (!textMs.isEmpty()) {
-            if (getRadioButtonsValue()) {
-                int mSeconds = Integer.parseInt(textMs);
-                setProperties(mSeconds);
-            }
-            if (!getRadioButtonsValue()) {
-                int mSeconds = -Integer.parseInt(textMs);
-                setProperties(mSeconds);
-            }
-
-        } else {
+    private void textFieldValidation() {
+        String textMs = view.getTextField().getText().trim();
+        if (textMs.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Моля въведете число за милисекунди");
+        }
+    }
+
+    private void editLoadedFile() {
+        textFieldValidation();
+        validateChooseRadioButtons();
+        check();
+
+    }
+    private void check(){
+        String textMs = view.getTextField().getText().trim();
+        if (getRadioButtonsValue()) {
+            setProperties(Integer.parseInt(textMs));
+        }
+        if (!getRadioButtonsValue()) {
+            int mSeconds = -Integer.parseInt(textMs);
+            setProperties(mSeconds);
         }
     }
 

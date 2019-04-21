@@ -3,10 +3,12 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
+import java.nio.charset.Charset;
 
 
 public class Model {
-
+    private static final Charset UTF_8 = Charset.forName("Cp866");
+    private static final Charset ISO = Charset.forName("ISO8859_5");
 
     public int addition;
     public String inputFile = "";
@@ -35,8 +37,8 @@ public class Model {
         PrintStream fileOutput = null;
         try {
             // Create scanner with the Cyrillic encoding
-            fileInput = new Scanner(new File(inputFile), "windows-1251");
-            fileOutput = new PrintStream(outputFile, "windows-1251");
+            fileInput = new Scanner(new File(inputFile), String.valueOf(ISO));
+            fileOutput = new PrintStream(outputFile, String.valueOf(UTF_8));
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
