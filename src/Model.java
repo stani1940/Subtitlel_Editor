@@ -4,38 +4,39 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
+
 public class Model {
 
 
-    public int ADDITION;
-    public String INPUT_FILE = "";
-    public String OUTPUT_FILE = "";
+    public int addition;
+    public String inputFile = "";
+    public String outputFile = "";
 
     public Model() {
 
     }
 
-    public void setADDITION(int ADDITION) {
+    public void setAddition(int addition) {
 
-        this.ADDITION = ADDITION;
+        this.addition = addition;
     }
 
-    public void setINPUT_FILE(String INPUT_FILE) {
+    public void setInputFile(String inputFile) {
 
-        this.INPUT_FILE = INPUT_FILE;
+        this.inputFile = inputFile;
     }
 
-    public void setOUTPUT_FILE(String OUTPUT_FILE) {
-        this.OUTPUT_FILE = OUTPUT_FILE;
+    public void setOutputFile(String outputFile) {
+        this.outputFile = outputFile;
     }
 
-    void fixSubtitles() {
+    void fixFilesWithSubExtension() {
         Scanner fileInput = null;
         PrintStream fileOutput = null;
         try {
             // Create scanner with the Cyrillic encoding
-            fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
-            fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
+            fileInput = new Scanner(new File(inputFile), "windows-1251");
+            fileOutput = new PrintStream(outputFile, "windows-1251");
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
@@ -61,8 +62,8 @@ public class Model {
         // Extract 'from' time
         String fromTime = line.substring(1, bracketFromIndex);
         // Calculate new 'from' time
-        int newFromTime = (((Integer.parseInt(fromTime) / 60) * 1000 + ADDITION) / 1000) * 60;
-        System.out.println(ADDITION);
+        int newFromTime = (((Integer.parseInt(fromTime) / 60) * 1000 + addition) / 1000) * 60;
+        System.out.println(addition);
         // Find the following closing brace
         int bracketToIndex = line.indexOf('}', bracketFromIndex + 1);
 
@@ -70,19 +71,19 @@ public class Model {
         String toTime = line.substring(bracketFromIndex + 2, bracketToIndex);
 
         // Calculate new 'to' time
-        int newToTime = (Integer.parseInt(toTime) / 60) * 1000 + ADDITION;
+        int newToTime = (Integer.parseInt(toTime) / 60) * 1000 + addition;
         // Create a new line using the new 'from' and 'to' times
         return "{" + newFromTime + "}" + "{" + newToTime + "}" + line.substring(bracketToIndex + 1);
     }
 
-    void srtSubtitleLogic() {
+    void fixFileWithSrtExtension() {
         Scanner fileInput = null;
         PrintStream fileOutput = null;
         try {
             // Create scanner with the Cyrillic encoding
-            fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
+            fileInput = new Scanner(new File(inputFile), "windows-1251");
 
-            fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
+            fileOutput = new PrintStream(outputFile, "windows-1251");
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();
@@ -112,31 +113,29 @@ public class Model {
         String rightMilSecond = string.substring(string.length() - 3, string.length());
         String BleftMilSecond = string.substring(indexOfArrow - 7, indexOfArrow - 5);
         String BrightMilSecond = string.substring(string.length() - 6, string.length() - 4);
-        String leftHours = string.substring(indexOfArrow - 10, indexOfArrow - 8);
-        String rightHours = string.substring(string.length() - 9, string.length() - 7);
         int BLeftMilSeconds = Integer.parseInt(BleftMilSecond);
         int BRightMilSeconds = Integer.parseInt(BrightMilSecond);
         int LeftMilSeconds = Integer.parseInt(leftMilSecond);
         int RightMilSeconds = Integer.parseInt(rightMilSecond);
-        if (LeftMilSeconds + ADDITION < 1000 && RightMilSeconds + ADDITION < 1000) {
-            LeftMilSeconds = LeftMilSeconds + ADDITION;
-            RightMilSeconds = RightMilSeconds + ADDITION;
+        if (LeftMilSeconds + addition < 1000 && RightMilSeconds + addition < 1000) {
+            LeftMilSeconds = LeftMilSeconds + addition;
+            RightMilSeconds = RightMilSeconds + addition;
         } else {
-            if (LeftMilSeconds + ADDITION >= 1000 && RightMilSeconds + ADDITION <= 1000) {
-                RightMilSeconds = RightMilSeconds + ADDITION;
-                LeftMilSeconds = LeftMilSeconds + ADDITION;
+            if (LeftMilSeconds + addition >= 1000 && RightMilSeconds + addition <= 1000) {
+                RightMilSeconds = RightMilSeconds + addition;
+                LeftMilSeconds = LeftMilSeconds + addition;
                 String BLeft = Integer.toString(LeftMilSeconds);
                 LeftMilSeconds = Integer.parseInt(BLeft.replaceFirst(BLeft.substring(0, 1), ""));
                 BLeftMilSeconds += Integer.parseInt(BLeft.substring(0, 1));
-            } else if (RightMilSeconds + ADDITION >= 1000 && LeftMilSeconds + ADDITION <= 1000) {
-                LeftMilSeconds = LeftMilSeconds + ADDITION;
-                RightMilSeconds = RightMilSeconds + ADDITION;
+            } else if (RightMilSeconds + addition >= 1000 && LeftMilSeconds + addition <= 1000) {
+                LeftMilSeconds = LeftMilSeconds + addition;
+                RightMilSeconds = RightMilSeconds + addition;
                 String BRight = Integer.toString(RightMilSeconds);
                 RightMilSeconds = Integer.parseInt(BRight.replaceFirst(BRight.substring(0, 1), ""));
                 BRightMilSeconds += Integer.parseInt(BRight.substring(0, 1));
             } else {
-                RightMilSeconds = RightMilSeconds + ADDITION;
-                LeftMilSeconds = LeftMilSeconds + ADDITION;
+                RightMilSeconds = RightMilSeconds + addition;
+                LeftMilSeconds = LeftMilSeconds + addition;
                 String BLeft = Integer.toString(LeftMilSeconds);
                 LeftMilSeconds = Integer.parseInt(BLeft.replaceFirst(BLeft.substring(0, 1), ""));
                 BLeftMilSeconds += Integer.parseInt(BLeft.substring(0, 1));
@@ -180,8 +179,8 @@ public class Model {
 
         try {
             // Create scanner with the Cyrillic encoding
-            fileInput = new Scanner(new File(INPUT_FILE), "windows-1251");
-            fileOutput = new PrintStream(OUTPUT_FILE, "windows-1251");
+            fileInput = new Scanner(new File(inputFile), "windows-1251");
+            fileOutput = new PrintStream(outputFile, "windows-1251");
             String line;
             while (fileInput.hasNextLine()) {
                 line = fileInput.nextLine();

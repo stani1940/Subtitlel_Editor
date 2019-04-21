@@ -84,13 +84,13 @@ public class Controller {
 
     private void removeTagsFromLoadedFile() {
         if (view.getRemoveTagButton().isSelected()) {
-            model.setINPUT_FILE(String.valueOf(view.getFileChooser().getSelectedFile()));
+            model.setInputFile(String.valueOf(view.getFileChooser().getSelectedFile()));
             if (getFileExtension(view.getFileChooser()).equals("sub")) {
-                model.setOUTPUT_FILE("fixed.sub");
+                model.setOutputFile("fixed.sub");
                 model.removeTagsFromFile();
             }
             if (getFileExtension(view.getFileChooser()).equals("srt")) {
-                model.setOUTPUT_FILE("fixed.srt");
+                model.setOutputFile("fixed.srt");
                 model.removeTagsFromFile();
             }
 
@@ -117,15 +117,15 @@ public class Controller {
     }
 
     private void setProperties(int mSeconds) {
-        model.setADDITION(mSeconds);
-        model.setINPUT_FILE(String.valueOf(view.getFileChooser().getSelectedFile()));
+        model.setAddition(mSeconds);
+        model.setInputFile(String.valueOf(view.getFileChooser().getSelectedFile()));
         if (getFileExtension(view.getFileChooser()).equals("sub")) {
-            model.setOUTPUT_FILE("fixed.sub");
-            model.fixSubtitles();
+            model.setOutputFile("fixed.sub");
+            model.fixFilesWithSubExtension();
         }
         if (getFileExtension(view.getFileChooser()).equals("srt")) {
-            model.setOUTPUT_FILE("fixed.srt");
-            model.srtSubtitleLogic();
+            model.setOutputFile("fixed.srt");
+            model.fixFileWithSrtExtension();
         }
     }
 
